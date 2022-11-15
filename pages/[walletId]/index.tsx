@@ -71,15 +71,7 @@ const Home: NextPage = () => {
  useEffect(() => {
   setTimeout(async function(){
 
- setDec ((
-  await connection.getParsedTokenAccountsByOwner(
-    wallet.publicKey as PublicKey,
-    {
-      mint: new PublicKey( fanoutData.data?.fanout.mint as PublicKey),
-    }
-  )
-).value[0]?.account.data.parsed.info.tokenAmount.decimals)
-setDec(6)
+
 if (wallet && wallet.publicKey && fanoutData.data?.fanoutId) {
   const fanoutSdk = new FanoutClient(connection, asWallet(wallet!))
 const [nativeAccountId] = await FanoutClient.nativeAccount(
@@ -179,7 +171,7 @@ console.log(fanoutData.data?.nativeAccount.toBase58())
 
   async function uploadFile(file: any, fanout: any, authority: any, val: any, to:any): Promise<any> {
   
-    const body = ({nft: file, fanout, who: wallet.publicKey,val:val.toNumber(), to})
+    const body = ({nft: file, fanout, who: wallet.publicKey,val:val.toNumber(), to, environment })
     console.log(body)
 
     try {
@@ -377,20 +369,7 @@ console.log(hmm)
               </a>
             </p>
            
-              <p className="font-bold uppercase tracking-wide text-md mb-1">
-                Update Authority:{' '}
-                <a
-                  className="hover:text-blue-500 transition"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={pubKeyUrl(
-                    fanoutData.data?.nativeAccount,
-                    environment.label
-                  )}
-                >
-                  {shortPubKey(fanoutData.data?.nativeAccount)}
-                </a>
-              </p>
+            
 
             <p className="font-bold uppercase tracking-wide text-md mb-1">
               Cost {
@@ -422,6 +401,20 @@ console.log(hmm)
     
     <div className="center-col">
       <span>:D</span>
+      <p className="font-bold uppercase tracking-wide text-md mb-1">
+                Update Authority:{' '}
+                <a
+                  className="hover:text-blue-500 transition"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={pubKeyUrl(
+                    fanoutData.data?.nativeAccount,
+                    environment.label
+                  )}
+                >
+                  {(fanoutData.data?.nativeAccount.toBase58())}
+                </a>
+              </p>
       <ul>
       {state && ttypes && state.traitOptions.map((t: string, i: number ) => 
     <div className='scroll' key={i}> Upgrade your {t.split('-')[0]} to {t.split('-')[1]} for {state.shares[i].toNumber() / 10 ** (dec as number)} tokenz
