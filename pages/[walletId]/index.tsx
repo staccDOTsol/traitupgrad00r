@@ -170,7 +170,7 @@ console.log(fanoutData.data?.nativeAccount.toBase58())
   }
 
   async function uploadFile(file: any, fanout: any, authority: any, val: any, to:any): Promise<any> {
-  
+  console.log(environment.label)
     const body = ({nft: file, fanout, who: wallet.publicKey,val:val.toNumber(), to, environment })
     console.log(body)
 
